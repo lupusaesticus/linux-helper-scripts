@@ -1,5 +1,5 @@
 # linux-helper-scripts
-Personal scripts I've created to make my life easier, mostly with Claude or Gemini.
+Personal scripts I've created to make my life easier, mostly using Claude or Gemini.
 
 ### Scripts
 - **yaml_memcheck.sh**: Audits Docker memory limits by scanning a given folder for .yml files.
