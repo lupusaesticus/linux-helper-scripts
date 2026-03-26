@@ -16,7 +16,7 @@ show_help() {
 Usage: $(basename "$0") [OPTIONS]
 
 Options:
-  -t, --table       Output a human-readable, colorized table.
+  -t, --table       Output a human-readable, colourised table.
   -m, --machine     Output pipe-delimited data (Default).
   -d, --drive DEV   Get specific metric for a drive (Health% for SSD, Age for HDD).
   -l, --list        List available devices using: lsblk -dno NAME,MODEL,SIZE
