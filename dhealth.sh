@@ -1,7 +1,7 @@
 #!/bin/bash
 # A utility to monitor drive health and age using smartctl and nvme-cli.
 # Supports formatted tables, machine-readable logs, and specific metric extraction.
-# Generated with the help of Gemini by Lupus (https://github.com/lupusaesticus/linux-helper-scripts)
+# Created with the help of Gemini by Lupus (https://github.com/lupusaesticus/linux-helper-scripts)
 
 # --- Setup & Defaults ---
 output_file=${DHEALTH_OUT:-""}
