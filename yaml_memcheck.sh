@@ -17,7 +17,7 @@
 #   Adjust DOCKER_FOLDER, OS_MARGIN_GB and optionally WARNING_BUFFER_GB 
 #   in the configuration section.
 #
-# Created using Gemini for personal use by lupus (https://github.com/lupusaesticus)
+# Created using Gemini for personal use by lupus (https://github.com/lupusaesticus/linux-helper-scripts)
 # MIT License: Free to use at your own risk. No support or guarantees offered.
 #####################################################################################
 
