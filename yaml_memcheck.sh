@@ -95,15 +95,17 @@ FNR == 1 {
 
 END {
     RES_C="\033[0;36m"; G="\033[0;32m"; Y="\033[0;33m"; R="\033[0;31m"; NC="\033[0m";
-    RED="\033[0;31m";
+    RED="\033[0;31m"; BY="\033[1;33m";
 
     t_l = 0; t_r = 0;
     for (a in app_limit) { t_l += app_limit[a]; }
     for (a in app_res) { t_r += app_res[a]; }
     
     l_gb = t_l/1024; r_gb = t_r/1024;
+    cur_gb = cur_mb/1024;
     p_pos = int(((h_gb - m_gb) / h_gb) * 62);
     w_start = int(((h_gb - m_gb - w_gb) / h_gb) * 62);
+    cur_pos = int((cur_gb / h_gb) * 62);
 
     if (l_gb <= (h_gb - m_gb - w_gb)) LIM_COLOR=G;
     else if (l_gb <= (h_gb - m_gb)) LIM_COLOR=Y;
@@ -123,8 +125,9 @@ END {
     
     print "****************************************************************\n";
 
-    header_text = sprintf(" System RAM: %s / %.1f GiB ", human(cur_mb), h_gb);
-    padding = (64 - length(header_text)) / 2;
+    header_text = sprintf(" System RAM: %s%.2f GiB%s used / %.1f GiB total ", BY, cur_gb, NC, h_gb);
+    header_plain = sprintf(" System RAM: %.2f GiB used / %.1f GiB total ", cur_gb, h_gb);
+    padding = (64 - length(header_plain)) / 2;
     for(i=0; i<int(padding); i++) printf "=";
     printf "%s", header_text;
     for(i=0; i<int(padding + 0.5); i++) printf "=";
@@ -136,7 +139,10 @@ END {
         if (i <= w_start) C=G; else if (i <= p_pos) C=Y; else C=R;
         if (i == p_pos) {
             if (l_gb >= seg_gb) printf "%s|%s", C, NC; else printf "|";
-        } 
+        }
+        else if (i == cur_pos) {
+            printf "%s\342\227\217%s", BY, NC;
+        }
         else if (r_gb >= seg_gb) printf "%s#%s", RES_C, NC;
         else if (l_gb >= seg_gb) printf "%s#%s", C, NC;
         else printf ".";
