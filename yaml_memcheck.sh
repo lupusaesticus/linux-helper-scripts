@@ -116,12 +116,12 @@ END {
     subtitle = host_name
     print "\n****************************************************************";
     
-    t_pad_l = int((64 - length(title)) / 2);
-    t_pad_r = 64 - t_pad_l - length(title);
+    t_pad_l = int((62 - length(title)) / 2);
+    t_pad_r = 62 - t_pad_l - length(title);
     printf "*%*s%s%*s*\n", t_pad_l, "", title, t_pad_r, "";
     
-    s_pad_l = int((64 - length(subtitle)) / 2);
-    s_pad_r = 64 - s_pad_l - length(subtitle);
+    s_pad_l = int((62 - length(subtitle)) / 2);
+    s_pad_r = 62 - s_pad_l - length(subtitle);
     printf "*%*s%s%*s*\n", s_pad_l, "", subtitle, s_pad_r, "";
     
     print "****************************************************************\n";
