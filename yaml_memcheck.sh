@@ -12,21 +12,22 @@
 #   - Visualizes allocation vs. a safety "Host OS Headroom" progress bar.
 #   - Provides per-folder summaries and detailed container breakdowns.
 #   - Identifies containers lacking memory constraints as "Unlimited".
+#   - Used ram shown in yellow from right of graph (overlap may mess with this)
 #
 # Usage:
 #   Adjust DOCKER_FOLDER, OS_MARGIN_GB and optionally WARNING_BUFFER_GB 
 #   in the configuration section.
 #
-# Created using Gemini for personal use by lupus (https://github.com/lupusaesticus/linux-helper-scripts)
+# Created using Gemini and Claude for personal use by lupus (https://github.com/lupusaesticus/linux-helper-scripts)
 # MIT License: Free to use at your own risk. No support or guarantees offered.
 #####################################################################################
 
 # --- CONFIGURATION ---
 # Calculate total GiB with decimal precision
-HOST_GB=$(free -m | awk '/Mem:/ {printf "%.1f", $2/1024}')          
-OS_MARGIN_GB=8      
-WARNING_BUFFER_GB=4
-DOCKER_FOLDER="/opt/docker"
+HOST_GB=$(free -m | awk '/Mem:/ {printf "%.1f", $2/1024}')  # Total RAM available        
+OS_MARGIN_GB=8                                              # Safety margin for OS use
+WARNING_BUFFER_GB=4                                         # Additional buffer before hitting OS margin (graph goes red)
+DOCKER_FOLDER="/opt/docker"                                 # Folder that gets searched for yaml files
 # ---------------------
 
 CURRENT_RAM_MB=$(free -m | awk '/Mem:/ {print $3}')
@@ -133,19 +134,16 @@ END {
     for(i=0; i<int(padding + 0.5); i++) printf "=";
     printf "\n";
 
-    printf "[" ;
+    printf "[";
     for(i=1; i<=62; i++) {
         seg_gb = (i/62) * h_gb;
         if (i <= w_start) C=G; else if (i <= p_pos) C=Y; else C=R;
         if (i == p_pos) {
             if (l_gb >= seg_gb) printf "%s|%s", C, NC; else printf "|";
         }
-        else if (i == cur_pos) {
-            printf "%s\342\227\217%s", BY, NC;
-        }
         else if (r_gb >= seg_gb) printf "%s#%s", RES_C, NC;
         else if (l_gb >= seg_gb) printf "%s#%s", C, NC;
-        else printf ".";
+        else printf "%s.%s", (i > (62 - cur_pos) ? BY : NC), NC;
     }
     printf "]\n\n";
     
