@@ -116,17 +116,22 @@ END {
     subtitle = host_name
     print "\n****************************************************************";
     
-    t_pad_l = int((62 - length(title)) / 2);
-    t_pad_r = 62 - t_pad_l - length(title);
+    t_pad_l = int((64 - length(title)) / 2);
+    t_pad_r = 64 - t_pad_l - length(title);
     printf "*%*s%s%*s*\n", t_pad_l, "", title, t_pad_r, "";
     
-    s_pad_l = int((62 - length(subtitle)) / 2);
-    s_pad_r = 62 - s_pad_l - length(subtitle);
+    s_pad_l = int((64 - length(subtitle)) / 2);
+    s_pad_r = 64 - s_pad_l - length(subtitle);
     printf "*%*s%s%*s*\n", s_pad_l, "", subtitle, s_pad_r, "";
     
     print "****************************************************************\n";
 
-    header_text = sprintf(" System RAM: %s%.2f GiB%s used / %.1f GiB total ", BY, cur_gb, NC, h_gb);
+    for(i=1; i<=64; i++) {
+        if (i <= cur_pos) printf "%s_%s", Y, NC; else printf "_";
+    }
+    printf "\n";
+
+    header_text = sprintf(" System RAM: %s%.2f GiB%s used / %.1f GiB total ", Y, cur_gb, NC, h_gb);
     header_plain = sprintf(" System RAM: %.2f GiB used / %.1f GiB total ", cur_gb, h_gb);
     padding = (64 - length(header_plain)) / 2;
     for(i=0; i<int(padding); i++) printf "=";
@@ -143,7 +148,7 @@ END {
         }
         else if (r_gb >= seg_gb) printf "%s#%s", RES_C, NC;
         else if (l_gb >= seg_gb) printf "%s#%s", C, NC;
-        else printf "%s.%s", (i > (62 - cur_pos) ? BY : NC), NC;
+        else printf ".";
     }
     printf "]\n\n";
     
